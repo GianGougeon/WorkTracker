@@ -1,3 +1,5 @@
 node_modules
 style.css
 test.html
+.env
+data.txt

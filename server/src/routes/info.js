@@ -1,4 +1,6 @@
 const express = require("express");
+const fs = require("fs");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 
 const info = express.Router();
 
@@ -7,7 +9,8 @@ let data = {
     years: [],
 };
 
-info.post("/", (req, res) => {
+info.post("/",  (req, res) => {
+    // obtener el id del usuario de mongodb
     // Obtener los datos del cuerpo de la petición
     const {
         year,
@@ -70,6 +73,12 @@ info.post("/", (req, res) => {
     // Responder con un mensaje indicando que los datos se han guardado correctamente
     res.status(200).send("Los datos se han guardado correctamente");
     console.log(data);
+    // Exporta los datos en un archivo de texto
+    fs.writeFile("data.txt", JSON.stringify(data), "utf8", (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
 });
 
 info.get("/", (req, res) => {
@@ -78,3 +87,4 @@ info.get("/", (req, res) => {
 });
 
 module.exports = info;
+

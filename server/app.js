@@ -2,24 +2,39 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const router = require("./src/routes/index");
+// Conecta a la base de datos
+require("./src/db/config.js");
+
 const app = express();
-/*============================[Middleware]============================*/
+/*============================[Middlewares]============================*/
+const MongoStore = require("connect-mongo");
+/*----------- Session -----------*/
+app.use(cookieParser());
+let MONGOURL = process.env.MONGOURL || "mongodb://127.0.0.1:27017/worktracker";
+app.use(
+    session({
+        store: new MongoStore({ mongoUrl: MONGOURL }),
+        secret: "worktracker",
+        resave: false,
+        saveUninitialized: false,
+        rolling: true,
+        cookie: { maxAge: 3600000 }, // 1 hora
+    })
+);
 app.use(cors()); // Agregamos el middleware de cors
 app.use(express.json());
 app.use(
     express.urlencoded({
-        extended: false,
+        extended: true,
     })
 );
 /*============================[Rutas]============================*/
 app.use("/", router);
 /*============================[Servidor]============================*/
 const PORT = process.env.PORT || 8085;
-
-const server = app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
-server.on("error", (error) => {
-    logger.error(`Error en el servidor ${error}`);
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
