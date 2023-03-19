@@ -1,0 +1,57 @@
+.avatar {
+    display: flex;
+    justify-content: center;
+    margin: 6%;
+    flex-direction: column;
+    align-items: center;
+    > div:nth-child(1) {
+        border-radius: 50%;
+        background-color: red;
+        height: 100px;
+        width: 100px;
+        > p {
+            // center text
+            text-align: center;
+            // center text vertically
+            line-height: 100px;
+            color: white;
+            font-size: 2em;
+        }
+    }
+    > p {
+        margin-top: 10px;
+        font-size: 1.5em;
+        color: white;
+    }
+}
+
+.separador {
+    z-index: 3;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    margin: 25px 0;
+    > hr {
+        z-index: 3;
+        color: inherit;
+        font: inherit;
+        text-align: center;
+        margin: 0px;
+        width: 90%;
+        border-top: 1px solid rgb(204, 204, 204);
+    }
+    > span {
+        z-index: 3;
+        position: absolute;
+        padding: 0px 0.5rem;
+        background-color: #1d1f20;
+        font-weight: bold;
+        margin-top: -0.6rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
